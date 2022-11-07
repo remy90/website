@@ -1,10 +1,10 @@
 'use client'
 
+import { CMSLink } from '@components/CMSLink'
 import Image from 'next/image'
 import React from 'react'
 import Marquee from 'react-fast-marquee'
 import { Page } from '../../../payload-types'
-import { Button } from '../../Button'
 import { Gutter } from '../../Gutter'
 import { HeaderObserver } from '../../HeaderObserver'
 import { Media } from '../../Media'
@@ -13,11 +13,13 @@ import { RichText } from '../../RichText'
 
 import classes from './index.module.scss'
 
-export const HomeHero: React.FC<
-  Page['hero'] & {
-    pageTitle: string
-  }
-> = ({ richText, adjectives, actions, buttons, media }) => {
+export const HomeHero: React.FC<Page['hero']> = ({
+  richText,
+  adjectives,
+  actions,
+  buttons,
+  media,
+}) => {
   const theme = useTheme()
 
   return (
@@ -47,14 +49,7 @@ export const HomeHero: React.FC<
                       {actions.map(({ link }, i) => {
                         return (
                           <li key={i}>
-                            <Button
-                              appearance="default"
-                              icon="arrow"
-                              reference={link.reference}
-                              label={link.label}
-                              labelStyle="regular"
-                              fullWidth
-                            />
+                            <CMSLink {...link} appearance="default" fullWidth />
                           </li>
                         )
                       })}
@@ -65,7 +60,7 @@ export const HomeHero: React.FC<
                       {buttons.map(({ link }, i) => {
                         return (
                           <li key={i}>
-                            <Button {...link} />
+                            <CMSLink {...link} />
                           </li>
                         )
                       })}

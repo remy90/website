@@ -21,6 +21,15 @@ export const BLOG_CONTENT = `
 }
 `
 
+export const BLOG_MARKDOWN = `
+...on Markdown {
+  blockType
+  blogMarkdownFields {
+    markdown
+  }
+}
+`
+
 export const CODE_BLOCK = `
 ...on Code {
   blockType
@@ -35,7 +44,9 @@ export const CODE_FEATURE = `
 ...on CodeFeature {
   blockType
   codeFeatureFields {
+    heading
     richText
+    enableLink
     link ${LINK_FIELDS()}
     language
     label
@@ -90,10 +101,27 @@ export const CASE_STUDIES_HIGHLIGHT = `
 }
 `
 
+export const CASE_STUDY_CARDS = `
+...on CaseStudyCards {
+  blockType
+  caseStudyCardFields {
+    cards {
+      richText
+      caseStudy {
+        slug
+        featuredImage ${MEDIA_FIELDS}
+      }
+    }
+  }
+}
+`
+
 export const CONTENT = `
 ...on Content {
   blockType
   contentFields {
+    useLeadingHeader
+    leadingHeader
     layout
     columnOne
     columnTwo
@@ -106,8 +134,8 @@ export const CONTENT_GRID = `
 ...on ContentGrid {
   blockType
   contentGridFields {
+    forceDarkBackground
     cells {
-      forceDarkBackground
       content
     }
   }
@@ -171,6 +199,7 @@ export const MEDIA_CONTENT = `
     alignment
     container
     richText
+    enableLink
     link ${LINK_FIELDS({ disableAppearance: true })}
     media ${MEDIA_FIELDS}
   }
@@ -232,9 +261,11 @@ export const REUSABLE_CONTENT_BLOCK = `
       layout {
         ${BANNER}
         ${BLOG_CONTENT}
+        ${BLOG_MARKDOWN}
         ${CALL_TO_ACTION}
         ${CARD_GRID}
         ${CASE_STUDIES_HIGHLIGHT}
+        ${CASE_STUDY_CARDS}
         ${CODE_BLOCK}
         ${CODE_FEATURE}
         ${CONTENT}

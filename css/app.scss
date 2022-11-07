@@ -26,21 +26,21 @@
   --block-spacing: calc(var(--base) * 7);
 
   @include extra-large-break {
-    --gutter-h: calc(var(--base) * 14);
-    --block-spacing: calc(var(--base) * 5);
     --font-body-size: 18px;
     --base: 20px;
   }
 
   @include large-break {
     --gutter-h: calc(var(--base) * 4);
-    --block-spacing: calc(var(--base) * 4);
+    --block-spacing: calc(var(--base) * 6);
     --header-height: 80px;
   }
 
   @include mid-break {
     --gutter-h: calc(var(--base) * 2);
     --header-height: 66px;
+    --block-spacing: calc(var(--base) * 4);
+    --page-padding-top: calc(var(--header-height) + var(--base) * 1.5);
   }
 
   @include small-break {
@@ -123,6 +123,10 @@ h6 {
 
 p {
   margin: 0 0 var(--base);
+
+  @include small-break {
+    margin: 0 0 calc(var(--base) / 2);
+  }
 }
 
 ul,
@@ -133,6 +137,8 @@ ol {
 
 a {
   color: currentColor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 
   &:focus {
     opacity: .8;

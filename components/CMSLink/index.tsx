@@ -2,35 +2,64 @@ import Link from 'next/link'
 import React from 'react'
 import { CaseStudy, Page, Post, UseCase } from '../../payload-types'
 // eslint-disable-next-line import/no-cycle
-import { Button } from '../Button'
+import { Button, Props as ButtonProps } from '../Button'
 
-export type Reference =
-  | {
-      value: string | Page
-      relationTo: 'pages'
-    }
-  | {
-      value: string | Post
-      relationTo: 'posts'
-    }
-  | {
-      value: string | UseCase
-      relationTo: 'use-cases'
-    }
-  | {
-      value: string | CaseStudy
-      relationTo: 'case-studies'
-    }
+type PageReference = {
+  value: string | Page
+  relationTo: 'pages'
+}
+
+type UseCaseReference = {
+  value: string | UseCase
+  relationTo: 'use-cases'
+}
+
+type PostsReference = {
+  value: string | Post
+  relationTo: 'posts'
+}
+
+type CaseStudyReference = {
+  value: string | CaseStudy
+  relationTo: 'case-studies'
+}
+
+export type LinkType = 'reference' | 'custom'
+export type Reference = PageReference | UseCaseReference | PostsReference | CaseStudyReference
 
 type CMSLinkType = {
-  type?: 'reference' | 'custom'
+  type?: LinkType
   newTab?: boolean
   reference: Reference
   url: string
-  label: string
+  label?: string
   appearance?: 'default' | 'primary' | 'secondary'
   children?: React.ReactNode
+  fullWidth?: boolean
   className?: string
+}
+
+type GenerateSlugType = {
+  type: LinkType
+  url?: string
+  reference?: Reference
+}
+const generateHref = (args: GenerateSlugType): string => {
+  const { reference, url, type } = args
+
+  if (type === 'custom') {
+    return url
+  }
+
+  if (reference?.value && typeof reference.value !== 'string') {
+    if (reference.relationTo === 'pages') {
+      return `/${reference.value.slug}`
+    }
+
+    return `/${reference.relationTo}/${reference.value.slug}`
+  }
+
+  return ''
 }
 
 export const CMSLink: React.FC<CMSLinkType> = ({
@@ -42,11 +71,9 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   appearance,
   children,
   className,
+  fullWidth = false,
 }) => {
-  let href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `/${reference.value.slug}`
-      : url
+  let href = generateHref({ type, url, reference })
 
   if (!href) {
     return (
@@ -90,11 +117,16 @@ export const CMSLink: React.FC<CMSLinkType> = ({
     )
   }
 
-  const buttonProps = {
+  const buttonProps: ButtonProps = {
     newTab,
     href,
     appearance,
     label,
+    fullWidth,
+  }
+
+  if (appearance === 'default') {
+    buttonProps.icon = 'arrow'
   }
 
   return <Button {...buttonProps} className={className} el="link" />

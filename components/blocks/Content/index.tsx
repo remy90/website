@@ -13,7 +13,7 @@ const Columns: React.FC<Props> = ({ contentFields }) => {
   switch (layout) {
     case 'oneColumn': {
       return (
-        <Cell cols={9} colsM={4}>
+        <Cell cols={9} colsM={8}>
           <RichText content={columnOne} />
         </Cell>
       )
@@ -70,8 +70,13 @@ const Columns: React.FC<Props> = ({ contentFields }) => {
 }
 
 export const ContentBlock: React.FC<Props> = props => {
+  const {
+    contentFields: { useLeadingHeader, leadingHeader },
+  } = props
+
   return (
     <Gutter className={classes.mediaBlock}>
+      {useLeadingHeader && <RichText className={classes.leadingHeader} content={leadingHeader} />}
       <Grid>
         <Columns {...props} />
       </Grid>
