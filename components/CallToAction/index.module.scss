@@ -1,0 +1,44 @@
+@use '@scss/common' as *;
+
+.bg {
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + var(--gutter-h));
+  height: 100%;
+  margin-left: calc(var(--gutter-h) / -2);
+
+  @include mid-break {
+    margin-left: calc(var(--gutter-h) * -1);
+    width: calc(100% + (var(--gutter-h) * 2));
+  }
+}
+
+.wrapper {
+  position: relative;
+  padding-top: calc(var(--base) * 6);
+  padding-bottom: calc(var(--base) * 6);
+}
+
+.richText {
+  position: relative;
+  z-index: 2;
+  color: White;
+}
+
+.cpa {
+  margin-left: calc(var(--base) * 8);
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+
+  label {
+    color: white;
+  }
+
+  .copyText {
+    margin-top: var(--base);
+    color: #B6FFE0;
+  }
+}
