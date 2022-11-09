@@ -19,6 +19,7 @@ export const StickyHighlight: React.FC<Props> = React.memo(
   ({ richText, enableLink, link, type, code, media, yDirection, midBreak }) => {
     const [visible, setVisible] = useState(false)
     const [centerCodeMedia, setCenterCodeMedia] = useState(false)
+    const [init, setInit] = useState(false)
     const ref = useRef(null)
     const codeMediaWrapRef = useRef(null)
     const codeMediaInnerRef = useRef(null)
@@ -80,10 +81,17 @@ export const StickyHighlight: React.FC<Props> = React.memo(
       return () => null
     }, [ref, midBreak])
 
+    useEffect(() => {
+      setInit(true)
+    }, [])
+
     return (
       <div
         ref={ref}
-        className={[classes.stickyHighlight, classes[`scroll-direction--${yDirection}`]].join(' ')}
+        className={[
+          classes.stickyHighlight,
+          classes[`scroll-direction--${init ? yDirection : 'down'}`],
+        ].join(' ')}
       >
         <Grid className={classes.minHeight}>
           <Cell cols={5} colsM={8}>
@@ -115,7 +123,11 @@ export const StickyHighlight: React.FC<Props> = React.memo(
                   <div className={codeMediaClasses} ref={codeMediaWrapRef}>
                     <div className={classes.codeMediaInner} ref={codeMediaInnerRef}>
                       <div className={classes.media}>
-                        <Media resource={media} />
+                        <Media
+                          resource={media}
+                          sizes="(max-width: 768px) 100vw,
+                            50vw"
+                        />
                       </div>
                     </div>
                   </div>

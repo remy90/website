@@ -1,5 +1,7 @@
 @use '@scss/common' as *;
 
+$transTime: 300ms;
+
 .hoverHighlights {
     position: relative;
 }
@@ -9,7 +11,7 @@
 }
 
 .highlight {
-    padding: calc(var(--base) * 4) 0;
+    padding: calc(var(--base) * 3) 0;
     opacity: 0.5;
     transition: opacity 0.3s ease-in-out;
     width: 100%;
@@ -20,6 +22,7 @@
 
     @include mid-break {
         padding: calc(var(--base) * 2) 0;
+        opacity: 1;
     }
 }
 
@@ -29,6 +32,7 @@
 
 .hr {
     margin: 0;
+    background-size: calc(300% + var(--base)) 1px;
 }
 
 .description {
@@ -41,6 +45,15 @@
 
 .rowNumber {
     @include label;
+    text-align: center;
+
+    @include mid-break {
+        text-align: left;
+    }
+}
+
+.blipCell {
+    position: relative;
 }
 
 .content  {
@@ -62,10 +75,51 @@
     right: 0;
 }
 
-.media {
+.mediaWrapper {
     position: fixed;
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
-    height: auto;
+    aspect-ratio: 16 / 9;
     pointer-events: none;
+    transform: translate3d(150px, -50%, 0);
+    opacity: 0;
+    z-index: 1;
+
+    @include mid-break {
+        display: none;
+    }
+}
+
+.wrapperHovered {
+    opacity: 1;
+    transition: opacity $transTime ease-in-out;
+
+    &:local() {
+        .revealBox {
+            transform: scale(1);
+        }
+
+        .media {
+            transform: scale(1.01);
+        }
+    }
+}
+
+.revealBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0.8);
+    overflow: hidden;
+    transition: transform $transTime ease-in-out;
+}
+
+.media {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.2);
+    object-fit: cover;
+    transition: transform $transTime ease-in-out;
 }

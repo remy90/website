@@ -146,17 +146,19 @@ $breakpoint-xl-width: 1920px;
 
 @mixin color-links {
   a {
-    color: var(--theme-blue-600);
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+    color: var(--color-blue-600);
 
     &:hover {
-      color: var(--theme-blue-400);
+      color: var(--color-blue-400);
     }
 
     &:visited {
-      color: var(--theme-purple-700);
+      color: var(--color-purple-600);
 
       &:hover {
-        color: var(--theme-purple-500);
+        color: var(--color-purple-500);
       }
     }
   }

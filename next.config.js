@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const path = require('path')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-const nextConfig = {
+const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
   images: {
+    minimumCacheTTL: 6000,
     domains: ['localhost', process.env.NEXT_PUBLIC_CMS_URL, 'cms.payloadcms.com'],
   },
   experimental: {
@@ -33,6 +37,6 @@ const nextConfig = {
       },
     ]
   },
-}
+})
 
 module.exports = nextConfig
