@@ -1,0 +1,190 @@
+@use "@scss/common" as *;
+
+.footer {
+  position: relative;
+  padding-bottom: calc(var(--base) * 6.5);
+
+  @include mid-break {
+    padding-right: var(--gutter-h);
+    padding-left: var(--gutter-h);
+    padding-bottom: var(--gutter-h);
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+
+  @include small-break {
+    margin-bottom: calc(var(--base) * 1.5);
+  }
+}
+
+.heading {
+  margin-bottom: calc(var(--base) * 5);
+
+  @include mid-break {
+    margin-bottom: calc(var(--base) * 3);
+  }
+
+  @include small-break {
+    margin-bottom: calc(var(--base) * 2);
+  }
+}
+
+.payloadIcon {
+  width: calc(var(--base) * 1.5);
+  height:  calc(var(--base) * 1.5);
+}
+
+.navItem {
+  text-decoration: none;
+}
+
+.stayConnected {
+  @include mid-break {
+    margin-bottom: calc(var(--base));
+  }
+}
+
+.inputWrap {
+  position: relative;
+  margin-bottom: calc(var(--base) * 1.75);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+  &:hover {
+    &:local()  {
+      .subscribeButton {
+        transform: translate3d(3px, 0, 0);
+  
+        @include mid-break {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+    }
+  }
+
+  @include mid-break {
+    margin-bottom: calc(var(--base));
+  }
+}
+
+.input {
+  input {
+    &::placeholder {
+      color: var(--color-base-400);
+    }
+  }
+}
+
+.hiddenInput {
+  border: none;
+}
+
+.subscribe {
+  padding-right: calc(var(--base) * 1);
+
+  @include small-break {
+    padding-right: 0;
+  }
+}
+
+.subscribeButton {
+  position: absolute !important;
+  background-image: none !important;
+  top: calc(var(--base) * 0.5) !important;
+  right: calc(var(--base) * 1) !important;
+  width: unset !important;
+  min-width: unset !important;
+  padding-top: calc(var(--base) * 0.4) !important;
+}
+
+.subscribeDesc {
+  display: flex;
+  align-items: flex-start;
+
+  p {
+    color: var(--color-base-400);
+    padding-right: calc(var(--base) * 2);
+
+    @include mid-break {
+      margin-bottom: 0;
+    }
+  }
+
+  @include mid-break {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @include small-break {
+    padding-right: 0;
+  }
+}
+
+.ok {
+  flex-shrink: 0 !important;
+  border: 1px solid currentColor !important;
+  width: calc(var(--base) * 3) !important;
+  height: calc(var(--base) * 3) !important;
+  border-radius: calc(var(--base) * 3) !important;
+  display: block !important;
+  min-width: unset !important;
+  background-image: none !important;
+  padding-top: 0 !important;
+
+  &:hover {
+    opacity: 0.5 !important;
+  }
+
+  @include small-break {
+    display: none !important;
+  }
+}
+
+.socialWrap {
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--base) * 2);
+
+  @include small-break {
+    padding-top: 0;
+    padding-bottom: calc(var(--base));
+    display: block;
+  }
+}
+
+.social {
+  display: flex;
+
+  a {
+    display: block;
+  }
+
+  @include large-break {
+    padding-right: calc(var(--base) * 1);
+  }
+
+  @include mid-break {
+    padding-right: 0;
+  }
+}
+
+.socialIcon {
+  display: block;
+  width: calc(var(--base) * 1.4);
+  height: calc(var(--base) * 1.4);
+  margin: 0 calc(var(--base) * 1.5) 0 0;
+}
+
+.copyrightWrap {
+  padding-top: calc(var(--base) * 2);
+
+  @include small-break {
+    padding-top: calc(var(--base) * 0.5);
+  }
+}
+
+.copyright {
+  align-items: flex-end;
+}

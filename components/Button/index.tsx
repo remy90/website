@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowRightIcon } from '@components/icons/ArrowRightIcon'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 // eslint-disable-next-line import/no-cycle
@@ -19,7 +20,7 @@ export type Props = {
   className?: string
   label?: string
   labelStyle?: 'mono' | 'regular'
-  icon?: 'arrow' | 'search'
+  icon?: 'arrow' | 'arrowRight' | 'search'
   fullWidth?: boolean
   reference?: Reference
   htmlButtonType?: 'button' | 'submit'
@@ -29,6 +30,7 @@ export type Props = {
 
 const icons = {
   arrow: ArrowIcon,
+  arrowRight: ArrowRightIcon,
   search: SearchIcon,
 }
 
