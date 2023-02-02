@@ -53,7 +53,7 @@ const generateHref = (args: GenerateSlugType): string => {
   if (type === 'reference' && reference?.value && typeof reference.value !== 'string') {
     if (reference.relationTo === 'pages') {
       const { breadcrumbs } = reference.value
-      return breadcrumbs[breadcrumbs.length - 1].url
+      return breadcrumbs.at(-1).url
     }
 
     if (reference.relationTo === 'posts') {

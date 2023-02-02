@@ -29,10 +29,6 @@ export const RenderDoc: React.FC<Props> = ({ doc, next }) => {
     setOS(isMac ? '⌘' : 'CTRL')
   }, [])
 
-  const openSearch = React.useCallback(() => {
-    document.querySelector<HTMLButtonElement>('.DocSearch-Button').click()
-  }, [])
-
   // Need this until Next #42414 is fixed
   useEffect(() => {
     document.title = `${title} | Documentation | Payload CMS`
@@ -70,15 +66,6 @@ export const RenderDoc: React.FC<Props> = ({ doc, next }) => {
             label="Join us on Discord"
             labelStyle="mono"
             icon="arrow"
-          />
-          <Button
-            className={classes.search}
-            onClick={openSearch}
-            appearance="default"
-            el="button"
-            label={`Press ${OS}+K to search`}
-            labelStyle="mono"
-            icon="search"
           />
         </aside>
       </div>

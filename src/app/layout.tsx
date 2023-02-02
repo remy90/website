@@ -17,7 +17,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <link rel="icon" href="/images/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
       </head>
       <body
         className={[
@@ -32,7 +31,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className={classes.layout}>
             {children}
             <Footer {...footer} />
-            <div id="docsearch" />
           </div>
         </Providers>
       </body>

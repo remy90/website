@@ -8,6 +8,7 @@ import { formatDate } from '@utilities/format-date-time'
 import classes from './index.module.scss'
 
 type Props = Extract<Page['layout'][0], { blockType: 'slider' }>['sliderFields']['quoteSlides'][0]
+
 export const QuoteCard: React.FC<Props> = ({ richText, quoteDate }) => {
   return (
     <ThemeProvider theme="dark" className={classes.quoteCard}>

@@ -10,6 +10,7 @@
 }
 
 .slider {
+  width: 100%;
   position: relative;
   --pixel-extension-top: calc(var(--base) * 2.5);
   --pixel-extension-bottom: calc(var(--base) * 5);
@@ -51,7 +52,7 @@
 }
 
 .sliderTrack {
-  padding-bottom: calc(var(--base) * 2);
+  width: 100%;
 
   @include mid-break {
     padding-bottom: var(--base);
@@ -103,14 +104,13 @@
 }
 
 .slide {
-  margin-right: calc(var(--base) * 3);
+  padding: base();
+  background-color: var(--color-gray-2);
+  text-align: center;
+  cursor: pointer;
 
-  &:first-child {
-    margin-left: var(--gutter-h);
-  }
-
-  @include mid-break {
-    margin-right: var(--base);
+  &:nth-child(even) {
+    background-color: var(--color-gray-3);
   }
 }
 
@@ -151,5 +151,21 @@
   
   @include mid-break {
     min-width: 300px;
+  }
+}
+
+// --------------
+
+.track {
+  width: 100%;
+  padding-bottom: base(0.5);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: base(0.5);
+  & > *:not(:last-child) {
+    margin-right: base(0.25);
   }
 }

@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { SliderProvider, SliderNav, SliderTrack, Slide } from '@faceless-ui/slider'
-import { Cell, Grid } from '@faceless-ui/css-grid'
+import { SliderProvider, SliderNav, SliderTrack, Slide, SliderButton } from '@faceless-ui/slider'
 import { Gutter } from '@components/Gutter'
-import { PixelBackground } from '@components/PixelBackground'
 import { Page } from '@root/payload-types'
 import { RichText } from '@components/RichText'
+import { Cell, Grid } from '@faceless-ui/css-grid'
+import { PixelBackground } from '@components/PixelBackground'
 import { ArrowIcon } from '../../icons/ArrowIcon'
 import { ImageCard } from './ImageCard'
 import { QuoteCard } from './QuoteCard'
@@ -27,14 +27,11 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
   if (!slides || slides.length === 0) return null
 
   const CardToRender = cardTypes[sliderType]
+
   const withPixelBackground = sliderType === 'quoteSlider'
 
   return (
-    <div
-      className={[classes.slider, withPixelBackground && classes.withPixelBackground]
-        .filter(Boolean)
-        .join(' ')}
-    >
+    <div className={[classes.slider].filter(Boolean).join(' ')}>
       <Gutter>
         {useLeadingHeader && <RichText content={leadingHeader} className={classes.leadingHeader} />}
         <SliderNav
@@ -49,25 +46,14 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
           }}
         />
       </Gutter>
-
-      <div className={classes.trackWrap}>
-        <SliderTrack className={classes.sliderTrack}>
-          {slides.map((slide, index) => {
-            return (
-              <Slide
-                key={index}
-                index={index}
-                className={[classes.slide, classes[`slideType--${sliderType}`]]
-                  .filter(Boolean)
-                  .join(' ')}
-              >
-                <CardToRender {...slide} />
-              </Slide>
-            )
-          })}
-        </SliderTrack>
-        <div className={classes.progressBarBackground} />
-      </div>
+      <SliderTrack className={classes.sliderTrack}>
+        {slides.map((slide, index) => (
+          <Slide key={index} index={index} className={classes.slide}>
+            <CardToRender {...slide} />
+          </Slide>
+        ))}
+      </SliderTrack>
+      <div className={classes.progressBarBackground} />
 
       {withPixelBackground && (
         <Gutter className={classes.pixelContainer}>
@@ -83,10 +69,12 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
 }
 
 export const Slider: React.FC<Props> = props => {
-  const { gutterH } = useComputedCSSValues()
-
   return (
-    <SliderProvider slidesToShow={1.5} scrollOffset={gutterH}>
+    <SliderProvider slidesToShow={1} scrollSnap>
+      {/* <div className={classes.buttons}>
+        <SliderButton direction="prev">Previous</SliderButton>
+        <SliderButton direction="next">Next</SliderButton>
+      </div> */}
       <SliderBlock {...props} />
     </SliderProvider>
   )

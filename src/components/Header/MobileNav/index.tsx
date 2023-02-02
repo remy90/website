@@ -7,7 +7,6 @@ import { Gutter } from '@components/Gutter'
 import { MainMenu } from '@root/payload-types'
 import { usePathname } from 'next/navigation'
 import { FullLogo } from '../../../graphics/FullLogo'
-import { DocSearch } from '../Docsearch'
 import { MenuIcon } from '../../../graphics/MenuIcon'
 import { CMSLink } from '../../CMSLink'
 
@@ -77,8 +76,6 @@ export const MobileNav: React.FC<NavItems> = props => {
               </Link>
 
               <div className={classes.icons}>
-                <DocSearch />
-
                 <button type="button" className={classes.modalToggler} onClick={toggleModal}>
                   <MenuIcon />
                 </button>

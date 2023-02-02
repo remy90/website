@@ -6,6 +6,7 @@ import { fetchPage, fetchPages } from '../../graphql'
 import { UpdateTitle } from './updateTitle'
 
 const Page = async ({ params: { slug } }) => {
+  console.log('slugggyyyy', slug)
   const page = await fetchPage(slug)
 
   if (!page) return notFound()
@@ -23,8 +24,11 @@ export default Page
 
 export async function generateStaticParams() {
   const pages = await fetchPages()
-
+  console.log('pages!!', JSON.stringify(pages))
   return pages.map(({ breadcrumbs }) => ({
-    slug: breadcrumbs[breadcrumbs.length - 1].url.replace(/^\/|\/$/g, '').split('/'),
+    slug: breadcrumbs
+      .at(-1)
+      .url.replace(/^\/|\/$/g, '')
+      .split('/'),
   }))
 }

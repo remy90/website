@@ -30,13 +30,13 @@ export const HomeHero: React.FC<Page['hero']> = ({
           <div className={classes.bg}>
             <Marquee gradient={false}>
               <div className={classes.bgImage}>
-                <Image
+                {/* <Image
                   priority
                   src="/images/home-bg.png"
                   fill
                   alt="Screenshots of Payload"
                   sizes="191vh" // aspect ratio of png, translates to 100vh
-                />
+                /> */}
               </div>
             </Marquee>
           </div>
