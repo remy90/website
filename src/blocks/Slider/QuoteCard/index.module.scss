@@ -20,11 +20,20 @@
   }
 }
 
-.richText {
+.richTextStyle {
   @include large-body;
   margin-bottom: auto;
 }
 
+.answerStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.answerButton {
+  margin: 0.5rem;
+}
 // .date {
 //   @include body;
 //   display: block;
