@@ -3,6 +3,7 @@ import { CASE_STUDIES, CASE_STUDY } from './case-studies'
 import { GLOBALS } from './globals'
 import { PAGE, PAGES } from './pages'
 import { POST, POSTS, POST_SLUGS } from './posts'
+import { QUESTION_SETS } from './question-sets'
 
 const next = {
   revalidate: 600,
@@ -43,10 +44,11 @@ export const fetchPage = async (incomingSlugSegments?: string[]): Promise<Page> 
       },
     }),
   }).then(res => res.json())
+    .catch(err => console.error('errrrr nah', err))
 
   if (errors) {
-    console.error(JSON.stringify(errors))
-    throw new Error()
+    console.error('here???', JSON.stringify(errors))
+    throw new Error(JSON.stringify(errors))
   }
 
   const pagePath = `/${slugSegments.join('/')}`
@@ -63,9 +65,29 @@ export const fetchPage = async (incomingSlugSegments?: string[]): Promise<Page> 
   return null
 }
 
-export const fetchPages = async (): Promise<
-  Array<{ breadcrumbs: Page['breadcrumbs']; slug: string }>
-> => {
+export const fetchQuestionSets = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/api/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      next,
+      body: JSON.stringify({
+        query: QUESTION_SETS
+      }),
+    })
+    // console.log(res.url)
+    // console.log(res.type)
+    const r = await res.json()
+
+    return r;
+  } catch (err) {
+    console.error(err)
+  }
+  return;
+}
+export const fetchPages = async (): Promise<Array<{ breadcrumbs: Page['breadcrumbs']; slug: string }>> => {
   const { data, errors } = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/api/graphql`, {
     method: 'POST',
     headers: {

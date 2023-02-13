@@ -221,10 +221,7 @@ export const SLIDER = `
     }
     quoteSlides {
       richText
-      answers {
-        answer,
-        id
-      }
+      quoteDate
     }
   }
 }`

@@ -6,7 +6,7 @@ $curve: cubic-bezier(.165,.84,.44,1);
   --lineColor: var(--theme-elevation-500);
   --gapSize: calc(var(--base) * 1.5);
 
-  background-image: linear-gradient(90deg, var(--lineColor) 0%, var(--lineColor) 33.33%, transparent 33.33%, transparent calc(33.33% + var(--gapSize)), var(--lineColor) calc(33.33% + var(--gapSize)), var(--lineColor) 100%);
+  // background-image: linear-gradient(90deg, var(--lineColor) 0%, var(--lineColor) 33.33%, transparent 33.33%, transparent calc(33.33% + var(--gapSize)), var(--lineColor) calc(33.33% + var(--gapSize)), var(--lineColor) 100%);
   background-position: calc(50% - var(--gapSize)) 0;
   background-repeat: no-repeat;
   background-size: calc(300% + var(--gapSize)) 100%;

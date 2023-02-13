@@ -1,38 +1,90 @@
-import * as React from 'react'
+'use client'
+import React, { useContext, useMemo } from 'react'
 import { SliderProvider, SliderNav, SliderTrack, Slide } from '@faceless-ui/slider'
 import { Gutter } from '@components/Gutter'
 import { Page } from '@root/payload-types'
-import { RichText } from '@components/RichText'
-import { Cell, Grid } from '@faceless-ui/css-grid'
-import { PixelBackground } from '@components/PixelBackground'
 import { ArrowIcon } from '../../icons/ArrowIcon'
-import { ImageCard } from './ImageCard'
-import { QuoteCard } from './QuoteCard'
-
+import { QuestionCard } from './QuestionCard'
 import classes from './index.module.scss'
-
-const cardTypes = {
-  imageSlider: ImageCard,
-  quoteSlider: QuoteCard,
-}
+import { getFilteredItems, getLatestItemList, getPrerequisiteItems, HelperQuestionSet } from './helpers/ConditionalBlockHelper'
+import { AppCtx } from '@root/providers'
 
 type Props = Extract<Page['layout'][0], { blockType: 'slider' }>
 
 export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
-  const { sliderType, useLeadingHeader, leadingHeader } = sliderFields
+  /**
+   * {
+   * "data":{
+   *   "QuestionSets": {
+   *     "docs": [{
+   *       "slug":"solar",
+   *       "questionSet": {
+   *         "questionSet":[{
+   *           "id":"63e688c5fce414d6819c2749",
+   *           "question":"Do you have solar panels?",
+   *           "answers": [{
+   *             "answer":"Yes",
+   *             "id":"63e688d7fce414d6819c274a"
+   *           },
+   *          { 
+   *             "answer":"No",
+   *             "id":"63e688dbfce414d6819c274b"}],
+   *             "prerequisite":null},
+   *          {
+   *             "id":"63e688e3fce414d6819c274c",
+   *             "question":"How many?",
+   *             "answers":[{"answer":"1",
+   *             "id":"63e688e9fce414d6819c274d"
+   *           },
+   *          {"answer":"2",
+   *             "id":"63e688ebfce414d6819c274e"
+   *           },
+   *          {"answer":"3+",
+   *             "id":"63e688ecfce414d6819c274f"}],"prerequisite":"Do you have solar panels? = Yes"
+   *           },
+   *          {"id":"63e688f3fce414d6819c2750",
+   *             "question":"Do you intend on purchasing solar panels in the next six months?",
+   *             "answers":[{"answer":"Yes",
+   *             "id":"63e68902fce414d6819c2751"
+   *           },
+   *          {"answer":"No",
+   *             "id":"63e68905fce414d6819c2752"}],"prerequisite":"Do you have solar panels? = No"
+   *           },
+   *          {"id":"63e6890dfce414d6819c2753",
+   *             "question":"Would you be interested in charging your EV with solar panels?",
+   *             "answers":[{"answer":"Yes",
+   *             "id":"63e68923fce414d6819c2754"
+   *           },
+   *          {"answer":"No",
+   *             "id":"63e68927fce414d6819c2755"}],"prerequisite":"How many? = 3+"}]}}]}}}
+   */
+  if (!sliderFields) return;
 
-  const slides = sliderType === 'imageSlider' ? sliderFields.imageSlides : sliderFields.quoteSlides
+  //@ts-ignore
+  const slides: HelperQuestionSet[] = sliderFields?.questionSlides[0].questionSet.questionSet.map((qs: QuestionSet, i: number) => ({
+    index: i,
+    ...qs
+  }))
 
   if (!slides || slides.length === 0) return null
 
-  const CardToRender = cardTypes[sliderType]
+  const { state } = useContext(AppCtx)
+  // if no prerequisite, show
+  // if prerequisite is matched with 
+  const latestSlides = useMemo(() => {
+    console.log('triggered')
+    const result = slides.filter(slide => {
+      const slideToInclude = !slide.prerequisite || state.questionSets?.some(qs => qs.result === slide.prerequisite)
 
-  const withPixelBackground = sliderType === 'quoteSlider'
+      return slideToInclude
+    });
+
+    return result.sort((a, b) => a.index - b.index);
+  }, [state.questionSets.length])
 
   return (
     <div className={[classes.slider].filter(Boolean).join(' ')}>
       <Gutter>
-        {useLeadingHeader && <RichText content={leadingHeader} className={classes.leadingHeader} />}
         <SliderNav
           className={classes.sliderNav}
           prevButtonProps={{
@@ -46,23 +98,14 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
         />
       </Gutter>
       <SliderTrack className={classes.sliderTrack}>
-        {slides.map((slide, index) => (
-          <Slide key={index} index={index} className={classes.slide}>
-            <CardToRender {...slide} />
-          </Slide>
-        ))}
+        {latestSlides
+          .map((slide, index) => (
+            <Slide key={index} index={index} className={classes.slide}>
+              <QuestionCard {...slide} />
+            </Slide>
+          ))}
       </SliderTrack>
       <div className={classes.progressBarBackground} />
-
-      {withPixelBackground && (
-        <Gutter className={classes.pixelContainer}>
-          <Grid>
-            <Cell start={4} cols={9} className={classes.pixelCell}>
-              <PixelBackground />
-            </Cell>
-          </Grid>
-        </Gutter>
-      )}
     </div>
   )
 }
@@ -70,10 +113,6 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
 export const Slider: React.FC<Props> = props => {
   return (
     <SliderProvider slidesToShow={1} scrollSnap>
-      {/* <div className={classes.buttons}>
-        <SliderButton direction="prev">Previous</SliderButton>
-        <SliderButton direction="next">Next</SliderButton>
-      </div> */}
       <SliderBlock {...props} />
     </SliderProvider>
   )

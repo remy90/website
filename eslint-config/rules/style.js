@@ -8,7 +8,7 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'class-methods-use-this': 'off',
     // consistent new lines
-    'function-paren-newline': ['error', 'consistent'],
+    'function-paren-newline': 'off',
     'eol-last': ['error', 'always'],
     // allow restricted syntax like for...of loops
     'no-restricted-syntax': 'off',
@@ -17,5 +17,7 @@ module.exports = {
     // 'no-floating-promises': true,
     'space-infix-ops': 'off',
     '@typescript-eslint/space-infix-ops': 'warn',
+    'implicit-arrow-linebreak': 'off',
+    semi: 'off',
   },
-}
+};

@@ -393,19 +393,19 @@ module.exports = {
         /**
          * https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/type-annotation-spacing.md
          */
-        '@typescript-eslint/type-annotation-spacing': [
-          'error',
-          {
-            before: false,
-            after: true,
-            overrides: {
-              arrow: {
-                before: true,
-                after: true,
-              },
-            },
-          },
-        ],
+        // '@typescript-eslint/type-annotation-spacing': [
+        //   'error',
+        //   {
+        //     before: false,
+        //     after: true,
+        //     overrides: {
+        //       arrow: {
+        //         before: true,
+        //         after: true,
+        //       },
+        //     },
+        //   },
+        // ],
         /**
          * https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/typedef.md
          */
@@ -625,4 +625,4 @@ module.exports = {
       },
     },
   ],
-}
+};

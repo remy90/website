@@ -1,0 +1,45 @@
+@use '@scss/common' as *;
+
+.quoteCard {
+  @include large-body;
+  padding: calc(var(--base) * 4);
+  background-color: var(--color-base-950);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+}
+
+.icon {
+  margin-bottom: var(--base);
+
+  @include mid-break {
+    // max-width: 25px;
+    margin-bottom: calc(var(--base) / 2);
+  }
+}
+
+.richTextStyle {
+  @include large-body;
+  margin-bottom: auto;
+}
+
+.answerStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.answerButton {
+  margin: 0.5rem;
+}
+// .date {
+//   @include body;
+//   display: block;
+//   margin-top: calc(var(--base) * 2);
+
+//   @include extra-large-break {
+//     font-size: initial;
+//   }
+// }

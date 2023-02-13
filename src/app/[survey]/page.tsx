@@ -14,7 +14,7 @@ const Page = async () => {
     imageSlides: [{ image: "", id: "" }],
     quoteSlides: [{ quoteDate: '', richText: [{ "": "" }] }],
     //@ts-ignore
-    questionSlides: questionSets?.data.QuestionSets.docs
+    questionSlides: questionSets.data.QuestionSets.docs
   }
 
   return !questionSets

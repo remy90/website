@@ -1,6 +1,5 @@
 'use client'
-
-import React from 'react'
+import React, { createContext, Dispatch, useReducer } from 'react'
 import { ScrollInfoProvider } from '@faceless-ui/scroll-info'
 import { MouseInfoProvider } from '@faceless-ui/mouse-info'
 import { GridProvider } from '@faceless-ui/css-grid'
@@ -9,8 +8,21 @@ import { WindowInfoProvider } from '@faceless-ui/window-info'
 import HeaderThemeProvider from './HeaderTheme'
 import { ThemePreferenceProvider } from './Theme'
 import { ComputedCSSValuesProvider } from './ComputedCSSValues'
+import { questionReducer, ReducerAction, ReducerData } from '@root/reducers/questionReducer'
+import { HelperQuestionSet } from '@blocks/Slider/helpers/ConditionalBlockHelper'
 
-export const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AppCtx = createContext<{ state: ReducerData, dispatch: Dispatch<ReducerAction> }>({
+  state: {} as ReducerData,
+  dispatch: () => ({})
+});
+
+const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const initialState = {
+    questionSets: [] as HelperQuestionSet[],
+  };
+
+  const [state, dispatch] = useReducer(questionReducer, initialState);
+
   return (
     <ScrollInfoProvider>
       <MouseInfoProvider>
@@ -50,7 +62,9 @@ export const Providers: React.FC<{ children: React.ReactNode }> = ({ children })
               <ComputedCSSValuesProvider>
                 <ModalProvider transTime={0} zIndex="var(--z-modal)">
                   <HeaderThemeProvider>
-                    {children}
+                    <AppCtx.Provider value={{ state, dispatch }}>
+                      {children}
+                    </AppCtx.Provider>
                     <ModalContainer />
                   </HeaderThemeProvider>
                 </ModalProvider>
@@ -62,3 +76,5 @@ export const Providers: React.FC<{ children: React.ReactNode }> = ({ children })
     </ScrollInfoProvider>
   )
 }
+
+export { Providers, AppCtx }
