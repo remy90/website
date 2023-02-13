@@ -1,35 +1,30 @@
-import { Slider } from '@blocks/Slider/'
-import { OhmeLogo } from '@components/OhmeLogo'
-import { QuestionSet } from '@root/payload-types'
 import { notFound } from 'next/navigation'
 import React from 'react'
-import { fetchQuestionSets } from '../../graphql'
+import { Hero } from '../../components/Hero'
+import { RenderBlocks } from '../../components/RenderBlocks'
+import { fetchPage, fetchPages } from '../../graphql'
+import { UpdateTitle } from './updateTitle'
 
-const Page = async () => {
-  const questionSets: QuestionSet = await fetchQuestionSets();
-  const sliderFields = {
-    useLeadingHeader: false,
-    leadingHeader: [{ "[k: string]": "unknown" }],
-    sliderType: "questionSlider",
-    imageSlides: [{ image: "", id: "" }],
-    quoteSlides: [{ quoteDate: '', richText: [{ "": "" }] }],
-    //@ts-ignore
-    questionSlides: questionSets?.data.QuestionSets.docs
-  }
+const Page = async ({ params: { slug } }) => {
+  const page = await fetchPage(slug)
 
-  return !questionSets
-    ? notFound()
-    : (<>
-      <OhmeLogo />
-      <Slider blockType='slider' sliderFields={sliderFields} />
-    </>)
+  if (!page) return notFound()
+
+  return (
+    <React.Fragment>
+      <UpdateTitle title={page.meta?.title || page.title} />
+      <Hero page={page} />
+      <RenderBlocks blocks={page.layout} />
+    </React.Fragment>
+  )
 }
 
 export default Page
 
 export async function generateStaticParams() {
-  const questionSets = await fetchQuestionSets()
-  return questionSets.data.QuestionSets.docs.find(doc => doc.slug).questionSet.questionSet.map(() => ({
-    slug: questionSets.data.QuestionSets.docs.map(doc => doc.slug),
+  const pages = await fetchPages()
+
+  return pages.map(({ breadcrumbs }) => ({
+    slug: breadcrumbs[breadcrumbs.length - 1].url.replace(/^\/|\/$/g, '').split('/'),
   }))
 }

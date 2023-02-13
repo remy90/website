@@ -69,17 +69,12 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
   if (!slides || slides.length === 0) return null
 
   const { state } = useContext(AppCtx)
-  // if no prerequisite, show
-  // if prerequisite is matched with 
+
   const latestSlides = useMemo(() => {
-    console.log('triggered')
-    const result = slides.filter(slide => {
-      const slideToInclude = !slide.prerequisite || state.questionSets?.some(qs => qs.result === slide.prerequisite)
-
-      return slideToInclude
-    });
-
-    return result.sort((a, b) => a.index - b.index);
+    return slides
+      .filter(slide =>
+        !slide.prerequisite || state.questionSets?.some(qs => qs.result === slide.prerequisite))
+      .sort((a, b) => a.index - b.index);
   }, [state.questionSets.length])
 
   return (

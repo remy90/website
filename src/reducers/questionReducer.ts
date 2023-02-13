@@ -11,7 +11,6 @@ export type ReducerAction = {
 export const questionReducer: Reducer<ReducerData, ReducerAction> = (state, action) => {
   switch (action.type) {
     case 'UPDATE_QUESTION_SET': {
-      console.log(action.value)
       return {
         ...state,
         questionSets: [

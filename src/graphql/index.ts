@@ -77,8 +77,7 @@ export const fetchQuestionSets = async () => {
         query: QUESTION_SETS
       }),
     })
-    // console.log(res.url)
-    // console.log(res.type)
+
     const r = await res.json()
 
     return r;

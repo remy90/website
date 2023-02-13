@@ -7,16 +7,8 @@ import { AppCtx } from '@root/providers'
 const { quoteCard, answerStyle, answerButton } = classes
 export const QuestionCard = ({ id, prerequisite, question, answers }) => {
   const [questionSets, setQuestionSet] = React.useState<HelperQuestionSet[]>();
-
-  console.log('id', id)
-  console.log('question', question)
-  console.log('answers', answers)
-  console.log('prerequisite', prerequisite)
-  const { state, dispatch } = useContext(AppCtx)
+  const { dispatch } = useContext(AppCtx)
   const handleAnswerClick = (answer: React.MouseEventHandler<HTMLButtonElement>, id: string) => {
-    // check collection doesn't include questionSet already
-    // add question set to state
-    console.log('ahoyy')
     const newQuestionSet = {
       id,
       question,
@@ -32,7 +24,7 @@ export const QuestionCard = ({ id, prerequisite, question, answers }) => {
       value: newQuestionSet
     })
   };
-  console.log('state: ', state)
+
   return (
     <div className={quoteCard}>
       <h1>{question}</h1>
