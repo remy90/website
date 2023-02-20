@@ -58,14 +58,15 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
    *          {"answer":"No",
    *             "id":"63e68927fce414d6819c2755"}],"prerequisite":"How many? = 3+"}]}}]}}}
    */
-  if (!sliderFields) return;
 
+  if (!sliderFields) return;
+  console.log('blem', JSON.stringify(sliderFields?.questionSlides[0].questionSet))
   //@ts-ignore
   const slides: HelperQuestionSet[] = sliderFields?.questionSlides[0].questionSet.questionSet.map((qs: QuestionSet, i: number) => ({
     index: i,
     ...qs
   }))
-
+  console.log('slides', slides)
   if (!slides || slides.length === 0) return null
 
   const { state } = useContext(AppCtx)
@@ -76,7 +77,7 @@ export const SliderBlock: React.FC<Props> = ({ sliderFields }) => {
         !slide.prerequisite || state.questionSets?.some(qs => qs.result === slide.prerequisite))
       .sort((a, b) => a.index - b.index);
   }, [state.questionSets.length])
-
+  console.log('latestSlides', latestSlides)
   return (
     <div className={[classes.slider].filter(Boolean).join(' ')}>
       <Gutter>
